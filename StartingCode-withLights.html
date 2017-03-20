@@ -27,6 +27,13 @@
 
 		var scene, camera, renderer, controls, stats;
 
+		var geometry = new THREE.BoxGeometry(1,1,1);
+		var texture = THREE.ImageUtils.loadTexture('textures/11635.jpg');
+		var material = new THREE.MeshPhongMaterial( { map: texture } );
+
+		var h = 0;
+		var data_inizio = Date.now();
+
 		function Start() {
 			scene = new THREE.Scene();
 			camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -40,40 +47,8 @@
 			renderer.shadowMap.enabled = true;
 			document.body.appendChild( renderer.domElement );
 
-			camera.position.set(2,2,2);
+			camera.position.set(20,20,20);
 			camera.lookAt( new THREE.Vector3(0,0,0));
-
-			var geometry = new THREE.BoxGeometry(1,1,1);
-			var texture = THREE.ImageUtils.loadTexture('textures/11635.jpg');
-			var material = new THREE.MeshPhongMaterial( { map: texture } );
-
-/*
-			var cube = new THREE.Mesh( geometry, material );
-			cube.castShadow = true;
-			cube.receiveShadow = true;
-
-			var cubeTest = new THREE.Mesh(geometry, material);
-			cubeTest.castShadow = true;
-			cubeTest.receiveShadow = true;
-			cubeTest.position.set(1,0,0);*/
-
-			var  matrice = [10];
-				for(i = 0; i < 10; i++){
-					matrice[i] = [10];
-					for(j = 0; j < 10; j++){
-						if(i == 0 || j == 0 || i == 10-1 || j == 10-1){
-							matrice[i][j] = new THREE.Mesh(geometry, material);
-							matrice[i][j].position.set(i,0,j);
-							scene.add(matrice[i][j]);
-						}
-					}
-				}
-
-
-
-
-			//scene.add(cubeTest);
-			//scene.add( cube );
 
 			hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
 			hemiLight.color.setHSL( 0.6, 1, 0.6 );
@@ -115,6 +90,21 @@
 
 		}
 
+		function creaMatrice(h){
+
+			var  matrice = [10];
+				for(i = 0; i < 10; i++){
+					matrice[i] = [10];
+					for(j = 0; j < 20; j++){
+						if(i == 0 || j == 0 || i == 10-1 || j == 20-1){
+							matrice[i][j] = new THREE.Mesh(geometry, material);
+							matrice[i][j].position.set(i,h,j);
+							scene.add(matrice[i][j]);
+						}
+					}
+				}
+		}
+
 		function Update() {
 			requestAnimationFrame( Update );
 			controls.update();
@@ -122,7 +112,16 @@
 			Render();
 		}
 
+		var posa = function(){
+			if(h < 20){
+				creaMatrice(h);
+				h++;
+			}
+		}
+
 		function Render() {
+
+			setTimeout(posa, 5000);
 
 			renderer.render(scene, camera);
 		}
