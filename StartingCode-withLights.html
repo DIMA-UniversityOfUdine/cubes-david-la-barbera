@@ -46,6 +46,8 @@
 			var geometry = new THREE.BoxGeometry(1,1,1);
 			var texture = THREE.ImageUtils.loadTexture('textures/11635.jpg');
 			var material = new THREE.MeshPhongMaterial( { map: texture } );
+
+/*
 			var cube = new THREE.Mesh( geometry, material );
 			cube.castShadow = true;
 			cube.receiveShadow = true;
@@ -53,11 +55,25 @@
 			var cubeTest = new THREE.Mesh(geometry, material);
 			cubeTest.castShadow = true;
 			cubeTest.receiveShadow = true;
-			cubeTest.position.set(1,0,0);
+			cubeTest.position.set(1,0,0);*/
 
-			scene.add(cubeTest);
+			var  matrice = [10];
+				for(i = 0; i < 10; i++){
+					matrice[i] = [10];
+					for(j = 0; j < 10; j++){
+						if(i == 0 || j == 0 || i == 10-1 || j == 10-1){
+							matrice[i][j] = new THREE.Mesh(geometry, material);
+							matrice[i][j].position.set(i,0,j);
+							scene.add(matrice[i][j]);
+						}
+					}
+				}
 
-			scene.add( cube );
+
+
+
+			//scene.add(cubeTest);
+			//scene.add( cube );
 
 			hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
 			hemiLight.color.setHSL( 0.6, 1, 0.6 );
