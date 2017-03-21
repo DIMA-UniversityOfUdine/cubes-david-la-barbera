@@ -28,12 +28,24 @@
 		var scene, camera, renderer, controls, stats;
 
 		var geometry = new THREE.BoxGeometry(1,1,1);
-		var texture = THREE.ImageUtils.loadTexture('textures/11635.jpg');
+		var texture = THREE.ImageUtils.loadTexture('textures/cobblestone.png');
 		var material = new THREE.MeshPhongMaterial( { map: texture } );
 
-		var h = 0;
+		//Variabili che consentono l'incremento in altezza delle mura
+		var altezza_muro_esterno = 0;
+		var altezza_muro_interno = 0;
+		var altezza_torre = 0;
+
+		//Istante di avvio dell'applicazione
 		var data_inizio = Date.now();
+
+		//Contatore incrementale che mi consente di scandire l'intervallo di tempo
 		var intervallo_tempo = 0;
+
+		//Contenitori
+		var contenitore_muro_esterno = new THREE.Object3D();
+		var contenitore_muro_interno = new THREE.Object3D();
+		var contenitore_torre = new THREE.Object3D();
 
 		function Start() {
 			scene = new THREE.Scene();
@@ -49,7 +61,7 @@
 			document.body.appendChild( renderer.domElement );
 
 			camera.position.set(20,20,20);
-			camera.lookAt( new THREE.Vector3(0,0,0));
+			camera.lookAt( new THREE.Vector3(-10,0,-10));
 
 			hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
 			hemiLight.color.setHSL( 0.6, 1, 0.6 );
@@ -66,6 +78,15 @@
 			dirLight.shadow.mapSize.width = 1024;
 			dirLight.shadow.mapSize.height = 1024;
 
+			//Setto una volta sola la posizione degli oggetti 3D fissi
+			contenitore_muro_esterno.position.set(-2.5, 0, -2.5);
+			contenitore_muro_interno.position.set(0.5, 0, 0.5);
+			contenitore_torre.position.set(2.5, 0, 2.5);
+
+			//Aggiungo i contenitori alla scena
+			scene.add(contenitore_muro_esterno);
+			scene.add(contenitore_muro_interno);
+			scene.add(contenitore_torre);
 
 			// GROUND
 			var groundGeo = new THREE.PlaneBufferGeometry( 10000, 10000 );
@@ -84,33 +105,39 @@
 
 			// uncomment if you need to draw coordinate axes when building the scene
 			//Coordinates.drawAllAxes();
-
 			controls = new THREE.OrbitControls( camera );
 			controls.addEventListener( 'change', Render );
 
-
 		}
 
-		function creaMatrice(h){
+		//Funzione che consente di istanziare il perimetro di una matrice di cubi
+		//Per sfruttare la funzione render la funzione costruisce un singolo livello
+		//Per poter riposizionare passo alla funzione in contenitore locale a cui aggiungere la struttura
+		function creaMuro(h, dim_i, dim_j, contenitore){
 
-			var  matrice = [20];
-				for(i = 0; i < 20; i++){
-					matrice[i] = [30];
-					for(j = 0; j < 30; j++){
-						if(i == 0 || j == 0 || i == 20-1 || j == 30-1){
+			var  matrice = [dim_i];
+				for(i = 0; i < dim_i; i++){
+					matrice[i] = [dim_j];
+					for(j = 0; j < dim_j; j++){
+						if(i == 0
+							|| j == 0
+							|| i == dim_i-1
+							|| j == dim_j-1){
 							matrice[i][j] = new THREE.Mesh(geometry, material);
 
 							matrice[i][j].castShadow = true;
 							matrice[i][j].receiveShadow = true;
 
+							//Posizione del singolo blocco
 							matrice[i][j].position.set(i,h,j);
 
-							scene.add(matrice[i][j]);
-
+							contenitore.add(matrice[i][j]);
 						}
 					}
 				}
+
 		}
+
 
 		function Update() {
 			requestAnimationFrame( Update );
@@ -120,13 +147,25 @@
 		}
 
 		function Render() {
-			if(Date.now() >= (data_inizio + intervallo_tempo)){
-				if(h < 3){
-					creaMatrice(h);
-					h++;
+				//Tale struttura mi consente di eseguire le istruzioni al suo interno circa ogni secondo
+				if(Date.now() >= (data_inizio + intervallo_tempo)){
+					//Inserisco il muro esterno
+					if(altezza_muro_esterno < 5){
+						creaMuro(altezza_muro_esterno, 40, 60, contenitore_muro_esterno);
+						altezza_muro_esterno++;
+					}
+					if(altezza_muro_interno < 10){
+						creaMuro(altezza_muro_interno, 34, 54, contenitore_muro_interno);
+						altezza_muro_interno++;
+					}
+					if(altezza_torre < 25){
+						creaMuro(altezza_torre, 10, 10, contenitore_torre);
+						altezza_torre++;
+					}
+					intervallo_tempo = intervallo_tempo + 1000;
 				}
-				intervallo_tempo = intervallo_tempo + 1000;
-			}
+
+
 			renderer.render(scene, camera);
 		}
 
