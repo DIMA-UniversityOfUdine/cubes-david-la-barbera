@@ -17,3 +17,8 @@ L'idea è quella di implementare in un secondo momento le seguenti feature:
 - Cancello (se possibile con una animazione che lo fa alzare ed abbassare);
 - Torri con eventuali feritoie;
 - Una merlatura per l'ultimo livello del castello (semplicemente modificando il codice che crea il muro attuale);
+
+### 22 - 03 - 2017 ###
+Il tetto sulla torre rende la scena più brutta, lo sostituisco con le merlature già usate per le mura. Ho creato due ingressi nelle mura, facendo in modo che le matrici fino ad una certa altezza contenessero dei buchi nell'intorno di dim_j/2.
+Ho definito un contenitore globale per traslare ogni componente in alto, così da poter inserire un terreno che fa da basamento alla struttura.
+Ho definito inoltre il ponte levatoio per i due ingressi. Probabilmente solamente uno dei due verrà animato, lasciando l'altro chiuso una volta completata la sua costruzione in real time.
