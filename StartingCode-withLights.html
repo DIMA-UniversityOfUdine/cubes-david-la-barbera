@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Starting Code for 1st Project 2017 - with lights and textures</title>
+		<title>La Barbera David Code for 1st Project 2017 - with lights and textures</title>
 		<style>
 
 		body {
@@ -29,42 +29,46 @@
 
 		var geometry = new THREE.BoxGeometry(1,1,1);
 		var geometry_terreno = new THREE.BoxGeometry(50,1,70);
-		
+		var geometry_pav_torre = new THREE.BoxGeometry(10, 0.2, 10);
+		var geometry_gate = new THREE.BoxGeometry(1,10,6);
+
 		var texture_pietra = THREE.ImageUtils.loadTexture('textures/cobblestone.png');
 		var material_pietra = new THREE.MeshPhongMaterial( { map: texture_pietra } );
 
 		var texture_legno = THREE.ImageUtils.loadTexture('textures/gate_wood.png');
 		var material_legno = new THREE.MeshPhongMaterial( { map: texture_legno } );
-
-		//http://opengameart.org/content/30-grass-textures-tilable
-		var texture_terreno = THREE.ImageUtils.loadTexture('textures/grass.png');
+		var texture_terreno = THREE.ImageUtils.loadTexture('textures/grass.jpg');
 		var material_terreno = new THREE.MeshPhongMaterial( { map: texture_terreno } );
-
 		//Variabili che consentono l'incremento in altezza delle mura
 		var altezza_muro_esterno = 0;
 		var altezza_muro_interno = 0;
 		var altezza_torre = 0;
 		var altezza_ponte = 0;
 		var lato_torre = 11;
-
+		var rotazione_ponte = 0;
+		var trasla_gate = 0;
 		//Variabile contenente un valore booleano indicante che la costruzione della struttura è stata completata
 		var bool_costruzione = new Boolean(false);
-
 		//Istante di avvio dell'applicazione
 		var data_inizio = Date.now();
-
 		//Contatore incrementale che mi consente di scandire l'intervallo di tempo
 		var intervallo_tempo = 0;
-
 		//Contenitori
 		//Uso un contenitore globale per traslare il tutto più comodamente
 		var contenitore_castello_globale = new THREE.Object3D();
+
 		var contenitore_muro_esterno = new THREE.Object3D();
 		var contenitore_muro_interno = new THREE.Object3D();
+
 		var contenitore_torre = new THREE.Object3D();
+
 		var contenitore_ponte1 = new THREE.Object3D();
 		var contenitore_ponte2 = new THREE.Object3D();
+
 		var contenitore_terreno = new THREE.Object3D();
+
+		var contenitore_gate_1 = new THREE.Object3D();
+		var contenitore_gate_2 = new THREE.Object3D();
 
 		function Start() {
 			scene = new THREE.Scene();
@@ -79,8 +83,8 @@
 			renderer.shadowMap.enabled = true;
 			document.body.appendChild( renderer.domElement );
 
-			camera.position.set(-40,50,0);
-			camera.lookAt( new THREE.Vector3(0,0,0));
+			camera.position.set(40, 50, 40);
+			camera.lookAt( new THREE.Vector3(-25,0,-25));
 
 			hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
 			hemiLight.color.setHSL( 0.6, 1, 0.6 );
@@ -98,17 +102,19 @@
 			dirLight.shadow.mapSize.height = 1024;
 
 			//Setto una volta sola la posizione degli oggetti 3D fissi
-			contenitore_castello_globale.position.set(0, 1, 0);
+			contenitore_castello_globale.position.set(-25, 1, -25);
 			contenitore_muro_esterno.position.set(-2.5, 0, -2.5);
 			contenitore_muro_interno.position.set(0.5, 0, 0.5);
 			contenitore_torre.position.set(2.5, 0, 2.5);
 			contenitore_ponte1.position.set(-3.5, 0, 24.5);
 			contenitore_ponte2.position.set(36.5, 0, 24.5);
-			contenitore_terreno.position.set(16, 0, 26);
+			contenitore_terreno.position.set(16, -1, 26);
+			contenitore_gate_2.position.set(1.5, 0, 27);
+			contenitore_gate_1.position.set(31.5, 0, 27);
 
 			//Aggiungo il terreno alla scena
-			//creaTerreno(50, 80, contenitore_terreno);
 			terreno = new THREE.Mesh(geometry_terreno, material_terreno);
+
 			terreno.receiveShadow = true;
 			contenitore_terreno.add(terreno);
 
@@ -118,7 +124,9 @@
 			contenitore_castello_globale.add(contenitore_torre);
 			contenitore_castello_globale.add(contenitore_ponte1);
 			contenitore_castello_globale.add(contenitore_ponte2);
-			scene.add(contenitore_terreno);
+			contenitore_castello_globale.add(contenitore_gate_1);
+			contenitore_castello_globale.add(contenitore_gate_2);
+			contenitore_castello_globale.add(contenitore_terreno);
 			scene.add(contenitore_castello_globale);
 
 
@@ -241,7 +249,6 @@
 
 		function Render() {
 			//Eseguo le seguenti istruzioni solo finchè non ho finito di costruire dinamicamente il castello
-			if(bool_costruzione){
 
 				if(altezza_ponte < 4){
 					creaPonte(altezza_ponte, contenitore_ponte1);
@@ -250,8 +257,15 @@
 				}
 
 				//Ho finito quando l'altezza torre è uguale a 25
-				if(altezza_torre == 26){
-					bool_costruzione = true;
+
+				if(rotazione_ponte < 1.5708){
+					rotazione_ponte = rotazione_ponte + 0.008;
+					contenitore_ponte1.rotation.z = rotazione_ponte;
+					contenitore_ponte2.rotation.z = -rotazione_ponte;
+				}else if(trasla_gate <= 0.25){
+					trasla_gate = trasla_gate + 0.005;
+					contenitore_gate_1.position.z = contenitore_gate_1.position.z - trasla_gate;
+					contenitore_gate_2.position.z = contenitore_gate_2.position.z + trasla_gate;
 				}
 				//Tale struttura mi consente di eseguire le istruzioni al suo interno circa ogni secondo
 				if(Date.now() >= (data_inizio + intervallo_tempo)){
@@ -278,6 +292,19 @@
 					if(altezza_muro_interno == 10){
 						creaMerlatura(altezza_muro_interno, 33, 53, contenitore_muro_interno, material_pietra);
 						altezza_muro_interno++;
+
+						//Creo i cancelli
+						var gate_1 = new THREE.Mesh(geometry_gate, material_legno);
+						gate_1.position.set(0, 4.5, 0);
+						gate_1.castShadow = true;
+						gate_1.receiveShadow = true;
+						contenitore_gate_1.add(gate_1);
+
+						var gate_2 = new THREE.Mesh(geometry_gate, material_legno);
+						gate_2.castShadow = true;
+						gate_2.receiveShadow = true;
+						gate_2.position.set(0, 4.5, 0);
+						contenitore_gate_2.add(gate_2);
 					}
 
 					if(altezza_torre < 25){
@@ -285,13 +312,15 @@
 						altezza_torre++;
 					}
 					if(altezza_torre == 25){
+						var pavimento_torre = new THREE.Mesh(geometry_pav_torre, material_legno);
+						pavimento_torre.position.set(5, altezza_torre-2, 5);
+						contenitore_torre.add(pavimento_torre);
 						creaMerlatura(altezza_torre, lato_torre, lato_torre, contenitore_torre, material_pietra);
 						altezza_torre++;
 					}
 
 					intervallo_tempo = intervallo_tempo + 200;
 				}
-			}
 			renderer.render(scene, camera);
 		}
 

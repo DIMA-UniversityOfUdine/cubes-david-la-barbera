@@ -1,3 +1,14 @@
+# Descrizione Introduttiva
+
+Per questo progetto ho deciso di creare una scena seguendo delle idee ben precise. Ho pensato di creare una applicazione che, nell'arco di una ventina di secondi costruisca un pezzo alla volta un castello composto da mattoncini. L'idea è quella di emulare la costruzione di un edificio con il lego. La scena come già detto viene costruita per livelli, questo perchè ho utlizzato per la struttura globale del castello solamente box di dimensioni 1x1x1, così da rendere la crescita omogenea in termini di tempo e di altezza.
+Per la realizzazione del progetto ho usato pochi file esterni, solamente due texture per la pietra, il legno e la base d'erba.
+ - La texture per la pietra è stata ottenuta da [Minecraft Texture Pack](http://www.minecrafttexturepacks.com/), un sito web che fornisce texture gratuite da utilizzare come mod sostitutive per quelle originariamente presenti nel gioco, fornendo texture in HD e generalmente diverse da quelle standard.
+ - La texture per il legno a sua volta fa parte dello stesso pack della precedente.
+ - Essendo il cubo usato come base molto più largo, ho optato per una texture con risoluzione maggiore rispetto a quelle precendente nel pack precendente. Tale texture è stata ottenuta dal sito web [link](http://goodtextures.deviantart.com/art/Seamless-Green-Grass-Texture-01-271356478), tale texture è senza licenza e quindi gratuitamente utilizzabile.
+
+# Risultati
+
+
 # Modeling and rendering with cubes
 
 ![Image from Minecraft](https://jordanweagly.files.wordpress.com/2012/02/figure_4.png)
@@ -17,11 +28,11 @@
 - Try to work out a basic project which satisfies all requirements well before the deadline and as soon as possible: you will then use the remaining time to refine, improve and polish.
 - If you are stuck for too much time on a problem, ask for help, preferably in the forum.
 - the process is as important as the result. Use this project to learn a workflow, and how to use tools effectively. Experiment, and try to come up with efficient, elegant, and well commented code.
-- commit often in your git repository and with meaningful comments. 
+- commit often in your git repository and with meaningful comments.
 
-## Goals 
+## Goals
 In this project you'll first create an interesting scene of your own design, made up just of cubes. The cubes can be
-translated, scaled and rotated as you wish. For inspiration, look at [Minecraft](https://minecraft.net/en-us/), 
+translated, scaled and rotated as you wish. For inspiration, look at [Minecraft](https://minecraft.net/en-us/),
 Legos, and voxel-based games such as [Crossy Road](http://www.crossyroad.com).
 
 I am not expecting something highly complex, but I expect something **interesting** and that you use **at least 30 cubes**.
@@ -36,22 +47,22 @@ form of a greyscale image as input;
 - alternatively, you can choose to create a short movie that presents your scene.
 
 In either case, see the next sections for more detailed instructions and suggestions. You are also required to document your
-work and write a final report, as detailed below. 
+work and write a final report, as detailed below.
 
 ## Starting code
 
-I have provided two starting scenes, one without lights and textures, and one which includes a basic lighting setup 
-and an example of texture usage. Your final result should be obtained by modifiying ONE of these files. 
+I have provided two starting scenes, one without lights and textures, and one which includes a basic lighting setup
+and an example of texture usage. Your final result should be obtained by modifiying ONE of these files.
 
 Choose the one you prefer based on the kind of result you want to obtain, and how much you want to experiment with features we haven't yet explained in our lectures. You are free to do any modifications, including replacing my code, e.g. to use an orthographic camera instead of a perspective one.
 
-For the cube materials, without lights you can use MeshBasicMaterial for solid, textured, or wireframe rendering. 
+For the cube materials, without lights you can use MeshBasicMaterial for solid, textured, or wireframe rendering.
 
 When using lights, it is better to use MeshPhongMaterial for the cubes. The example also includes some code to render shadows; if you like the effect, you'll need to write similar code for all the boxes you will insert, or you can remove it entirely for rendering without shadows.
 
 The third starting code file is necessary only if you choose to create a terrain. It loads a *m by n* PNG image from a file and builds an array of *m x n* values where each value is a greyscale value in the range 0-255. The code assumes that the image is composed by four channels (RGBA) and the value of the three RGB channel is the same. If you use another kind of image, you will have to modify the code accordingly.
 
-## Steps 
+## Steps
 
 1. clone the starting code in the repository.
 2. examine the starting code carefully. In the case of the code which uses lights, we are using stuff that has not been explained in the course yet. However, with some help from the [three.js documentation](https://threejs.org/docs/index.html#Manual/Introduction/Creating_a_scene), it should not be too hard to figure out what each line does. Try to play with the code and modify values, and gain some understanding by observing the result of your changes. Often, we don't need to fully understand how code really function, or the underlying theory.
@@ -68,8 +79,8 @@ The third starting code file is necessary only if you choose to create a terrain
 
 ### Adding a terrain
 
-The code in StartingCode-heightmap loads a greyscale image from a file and creates and array of the same m x n size of the image, where the value in each cell ranges from 1 (black) to 63,75 (white). 
-Write a function that takes this array, and creates a grid of cubes on the XZ plane, where the scaling and translation in Y for each cube is proportional to the value read in the array, meaning that you should choose a proportionality factor that makes the terrain look good. In other words, you are treating the image as an **heightmap**, where the greyscale value corresponds to the height of the corresponding point. 
+The code in StartingCode-heightmap loads a greyscale image from a file and creates and array of the same m x n size of the image, where the value in each cell ranges from 1 (black) to 63,75 (white).
+Write a function that takes this array, and creates a grid of cubes on the XZ plane, where the scaling and translation in Y for each cube is proportional to the value read in the array, meaning that you should choose a proportionality factor that makes the terrain look good. In other words, you are treating the image as an **heightmap**, where the greyscale value corresponds to the height of the corresponding point.
 
 You can also choose the cube color or texture based on the heightmap value, e.g. white color for high values (snow), grey color for medium values (rocks), green color for lower values (grass), but this is just an example.
 
@@ -77,7 +88,7 @@ You can also choose the cube color or texture based on the heightmap value, e.g.
 
 Remove the code for orbiting the camera with the mouse and plan camera movements (e.g., pan, arcing, traveling) and cuts. In the Update function, using the Date.now() Javascript function (that returns the number of milliseconds elapsed since 1 January 1970 00:00:00 UTC) you can check how much time is passed since the application started and then activate the correct camera animation.
 
-For producing the movie, you can use some screen capture application, and then, if you want, you can use video editing software to apply post effects, transitions, and color correction.	
+For producing the movie, you can use some screen capture application, and then, if you want, you can use video editing software to apply post effects, transitions, and color correction.
 
 ## Documenting and report
 
@@ -98,7 +109,7 @@ The report should be as brief as possible while covering the following points:
 
 ## Constraints
 
-If you use textures, please make sure that you have the rights to include them. For example, search for images that come with a [CC Attribution, ShareAlike or NonCommercial licences](https://creativecommons.org/share-your-work/licensing-types-examples/). 
+If you use textures, please make sure that you have the rights to include them. For example, search for images that come with a [CC Attribution, ShareAlike or NonCommercial licences](https://creativecommons.org/share-your-work/licensing-types-examples/).
 
 You are allowed to take inspiration, or create models that reproduce what you see in images on the internet, but copying others' work, even with slight modifications, is forbidden and will have serious consequences beyond the deletion of your project. In any case, mention any source of inspiration in your journal and final report.
 
@@ -115,4 +126,3 @@ If you like voxels, check out [this three.js-based project](http://voxeljs.com).
 ## Useful material and references
 
 Sometimes, some feature of the Javascript language can be tricky: [a growing list of quirks](http://bonsaiden.github.io/JavaScript-Garden/)
-
