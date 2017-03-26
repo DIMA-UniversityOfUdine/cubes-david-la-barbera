@@ -1,7 +1,7 @@
 # Descrizione Introduttiva
 
-Per questo progetto ho deciso di creare una scena seguendo delle idee ben precise. Ho pensato di creare una applicazione che, nell'arco di una ventina di secondi costruisca un pezzo alla volta un castello composto da mattoncini. L'idea è quella di emulare la costruzione di un edificio con il lego. La scena come già detto viene costruita per livelli, questo perchè ho utlizzato per la struttura globale del castello solamente box di dimensioni 1x1x1, così da rendere la crescita omogenea in termini di tempo e di altezza.
-Per la realizzazione del progetto ho usato pochi file esterni, solamente due texture per la pietra, il legno e la base d'erba.
+Per questo progetto ho deciso di creare una scena seguendo delle idee ben precise. Ho pensato di creare una applicazione che, nell'arco di una ventina di secondi costruisca un pezzo alla volta un castello composto da mattoncini. L'idea è quella di emulare la costruzione di un edificio con il lego in maniera progressiva con la scena che acquisisce senso ed elementi con il passare del tempo sotto agli occhi dell'utente. La scena come già detto viene costruita per livelli, questo perchè ho utlizzato per la struttura globale del castello solamente box di dimensioni 1x1x1, così da rendere la crescita omogenea in termini di tempo e di altezza.
+Per la realizzazione del progetto ho usato pochi file esterni, solamente tre texture per la pietra, il legno e la base d'erba.
  - La texture per la pietra è stata ottenuta da [Minecraft Texture Pack](http://www.minecrafttexturepacks.com/), un sito web che fornisce texture gratuite da utilizzare come mod sostitutive per quelle originariamente presenti nel gioco, fornendo texture in HD e generalmente diverse da quelle standard.
  - La texture per il legno a sua volta fa parte dello stesso pack della precedente.
  - Essendo il cubo usato come base molto più largo, ho optato per una texture con risoluzione maggiore rispetto a quelle precendente nel pack precendente. Tale texture è stata ottenuta dal sito web [goodtextures](http://goodtextures.deviantart.com/art/Seamless-Green-Grass-Texture-01-271356478) , tale texture è senza licenza e quindi gratuitamente utilizzabile.
@@ -18,6 +18,27 @@ Come si può vedere ho usato una semplice struttura definendo un pivot globale (
 - contenitore_muro_esterno e contenitore_muro_interno contengono una matrice i cui bordi contengono cubi 1x1x1. Sfruttando il metodo Render tali matrici vengono posizionate una sopra l'altra fino ad altezze predefinite andando a costruire la cinta muraria. Nell'ultimo livello, per un fattore puramente estetico ho istanziato una matrice di cubi posizionati nei bordi in posizioni pari, così da avere una merlatura e rendere il tutto esteticamente più attraente.
 - contenitore_torre contiene matrici di cubi come al punto precedente.
 - contenitore_terreno contiene un parallelepipedo usato per posizionare la struttura creata su qualcosa di più solido rispetto al ground già presente.
+
+![Risultato in Costruzione](https://github.com/DIMA-UniversityOfUdine/cubes-david-la-barbera/blob/master/images/risultato_in_costruzione.png?raw=true)
+
+Come si può vedere in figura, pochi secondi dopo aver inizializzato l'applicazione i livelli di matrici hanno iniziato a posarsi ad altezza crescente uno sopra l'altro. Si distingue chiaramente le due cinte murarie, la torre e si può vedere come l'animazione che apre i cancelli sia già stata avviata.
+
+![Risultato con Porte Chiuse](https://github.com/DIMA-UniversityOfUdine/cubes-david-la-barbera/blob/master/images/risultato_porte_chiuse.png?raw=true)
+
+A questo punto le mura e la torre sono state costruite e si vede le due porte bloccare l'accesso al castello, posizionate nella loro configurazione iniziale.
+
+![Risultato Finale](https://github.com/DIMA-UniversityOfUdine/cubes-david-la-barbera/blob/master/images/risultato_finale.png?raw=true)
+
+Come si può vedere in figura infine, la struttura finale del castello prevede che le porte si aprano, restituendo il castello nella sua configurazione finale.
+
+Ho preferito implementare delle animazioni sensate nel contesto che ho voluto ideare, facendo in modo che esse vengano avviate automaticamente in momenti ben precisi durante l'esecuzione della scena e prevedendo un inizio ed una fine delimitati da vincoli logici e di buon senso inerenti al contesto. La scena costruita è quinda da intendersi come una prima fase di una esperienza più vasta da espandere in seguito.
+
+# Processo di Creazione della scena
+
+Prima di costruire la scena ho lavorato con Unity per avere una idea a grandi linee del risultato voluto. Su Unity non ho implementato il risultato completo ma questa fase introduttiva mi è servita a sviluppare l'idea che ho poi implementato in three.js.
+Dopo questa breve fase sono passato allo sviluppo su three.js implementando le prime funzioni che mi consentissero di costruire la scena per livelli. In generale non mi sono servito di alcun tool o assets, gli unici elementi esterni che la scena include sono le texture utilizzate. 
+
+
 
 
 # Modeling and rendering with cubes
