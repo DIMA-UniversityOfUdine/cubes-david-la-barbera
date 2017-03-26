@@ -6,13 +6,19 @@ Per la realizzazione del progetto ho usato pochi file esterni, solamente due tex
  - La texture per il legno a sua volta fa parte dello stesso pack della precedente.
  - Essendo il cubo usato come base molto più largo, ho optato per una texture con risoluzione maggiore rispetto a quelle precendente nel pack precendente. Tale texture è stata ottenuta dal sito web [goodtextures](http://goodtextures.deviantart.com/art/Seamless-Green-Grass-Texture-01-271356478) , tale texture è senza licenza e quindi gratuitamente utilizzabile.
 
- ![scenegraph prodotto](https://github.com/DIMA-UniversityOfUdine/cubes-david-la-barbera/blob/master/images/scenegraph.jpg?raw=true)
-
- 
-
 # Risultati
 
 Al fine di meglio spiegare la struttura e quindi la logica dell'applicazione sviluppata, ho creato una sintesi globale dello scenegraph costruito.
+
+![Scenegraph Prodotto](https://github.com/DIMA-UniversityOfUdine/cubes-david-la-barbera/blob/master/images/scenegraph.jpg?raw=true)
+
+Come si può vedere ho usato una semplice struttura definendo un pivot globale (contenitore_castello_globale) che mi consente in caso di aggiunte future di agire sulla struttura nella sua interezza. In sintesi ciascun pivot contiene:
+- contenitore_ponte1 e contenitore_ponte2 contengono rispettivamente la matrice di cubi 1x1x1 che compongono il ponte. Tali cubi si sviluppano in altezza per formare un ponte levatoio alzato ma, durante la costruzione del castello i due contenitori subiscono una rotazione attorno al proprio asse z globalmente di 90 gradi, per aprire il ponte levatoio. Ho implementato volutamente due container distinti tenendo sempre a mente l'eventualità di modifiche successive.
+-  contenitore_gate_1 e contenitore_gate_2 contengono ciascuno un parallelepipedo che costituisce la porta di accesso ad un lato del castello. Tale porta viene visualizzata solo quando le mura sono state costruite nella loro interezza e, una volta costruito completamente il castello, traslano rispettivamente lungo -z e +z per aprirsi e consentire l'accesso.
+- contenitore_muro_esterno e contenitore_muro_interno contengono una matrice i cui bordi contengono cubi 1x1x1. Sfruttando il metodo Render tali matrici vengono posizionate una sopra l'altra fino ad altezze predefinite andando a costruire la cinta muraria. Nell'ultimo livello, per un fattore puramente estetico ho istanziato una matrice di cubi posizionati nei bordi in posizioni pari, così da avere una merlatura e rendere il tutto esteticamente più attraente.
+- contenitore_torre contiene matrici di cubi come al punto precedente.
+- contenitore_terreno contiene un parallelepipedo usato per posizionare la struttura creata su qualcosa di più solido rispetto al ground già presente.
+
 
 # Modeling and rendering with cubes
 
