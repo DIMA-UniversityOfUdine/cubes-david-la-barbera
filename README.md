@@ -31,7 +31,7 @@ A questo punto le mura e la torre sono state costruite e si vede le due porte bl
 
 Come si può vedere in figura infine, la struttura finale del castello prevede che le porte si aprano, restituendo il castello nella sua configurazione finale.
 
-#Considerazioni
+# Considerazioni
 
 Ho preferito implementare delle animazioni sensate nel contesto che ho voluto ideare, facendo in modo che esse vengano avviate automaticamente in momenti ben precisi durante l'esecuzione della scena e prevedendo un inizio ed una fine delimitati da vincoli logici e di buon senso inerenti al contesto. La scena costruita è quinda da intendersi come una prima fase di una esperienza più vasta da espandere in seguito.
 
