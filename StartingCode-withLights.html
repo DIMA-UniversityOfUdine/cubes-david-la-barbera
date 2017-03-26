@@ -251,15 +251,13 @@
 
 		function Render() {
 			//Eseguo le seguenti istruzioni solo finchè non ho finito di costruire dinamicamente il castello
-
 				if(altezza_ponte < 4){
 					creaPonte(altezza_ponte, contenitore_ponte1);
 					creaPonte(altezza_ponte, contenitore_ponte2);
 					altezza_ponte++;
 				}
 
-				//Ho finito quando l'altezza torre è uguale a 25
-
+				//Eseguo le animazioni, la seconda parte quando la prima ha finito
 				if(rotazione_ponte < 1.5708){
 					rotazione_ponte = rotazione_ponte + 0.008;
 					contenitore_ponte1.rotation.z = rotazione_ponte;
@@ -269,7 +267,7 @@
 					contenitore_gate_1.position.z = contenitore_gate_1.position.z - trasla_gate;
 					contenitore_gate_2.position.z = contenitore_gate_2.position.z + trasla_gate;
 				}
-				//Tale struttura mi consente di eseguire le istruzioni al suo interno circa ogni secondo
+				//Tale controllo mi consente di eseguire le istruzioni al suo interno circa ogni secondo
 				if(Date.now() >= (data_inizio + intervallo_tempo)){
 					//Inserisco il muro esterno e la sua merlatura
 					if(altezza_muro_esterno < 4){
