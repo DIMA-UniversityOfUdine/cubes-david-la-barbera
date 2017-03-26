@@ -4,10 +4,15 @@ Per questo progetto ho deciso di creare una scena seguendo delle idee ben precis
 Per la realizzazione del progetto ho usato pochi file esterni, solamente due texture per la pietra, il legno e la base d'erba.
  - La texture per la pietra è stata ottenuta da [Minecraft Texture Pack](http://www.minecrafttexturepacks.com/), un sito web che fornisce texture gratuite da utilizzare come mod sostitutive per quelle originariamente presenti nel gioco, fornendo texture in HD e generalmente diverse da quelle standard.
  - La texture per il legno a sua volta fa parte dello stesso pack della precedente.
- - Essendo il cubo usato come base molto più largo, ho optato per una texture con risoluzione maggiore rispetto a quelle precendente nel pack precendente. Tale texture è stata ottenuta dal sito web [link](http://goodtextures.deviantart.com/art/Seamless-Green-Grass-Texture-01-271356478), tale texture è senza licenza e quindi gratuitamente utilizzabile.
+ - Essendo il cubo usato come base molto più largo, ho optato per una texture con risoluzione maggiore rispetto a quelle precendente nel pack precendente. Tale texture è stata ottenuta dal sito web [goodtextures](http://goodtextures.deviantart.com/art/Seamless-Green-Grass-Texture-01-271356478) , tale texture è senza licenza e quindi gratuitamente utilizzabile.
+
+ ![scenegraph prodotto](https://github.com/DIMA-UniversityOfUdine/cubes-david-la-barbera/blob/master/images/scenegraph.jpg?raw=true)
+
+ 
 
 # Risultati
 
+Al fine di meglio spiegare la struttura e quindi la logica dell'applicazione sviluppata, ho creato una sintesi globale dello scenegraph costruito.
 
 # Modeling and rendering with cubes
 
