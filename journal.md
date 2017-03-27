@@ -29,3 +29,17 @@ Aggiunta di gate e ponti levatoi con relative animazioni.
 Definizione definitiva dello scene graph, per avere una struttura più solida e compatta. Più pivot innestati per creare un sistema di dipendenze coerente.
 Riposizionamento della scene camera, per avere una inquadratura iniziale più significativa.
 Il bug che non riesco a risolvere è relativo alle ombre. Poichè applico allo stesso modo tale feature per ogni cubo, mi aspetterei lo stesso risultato per ciascuno di loro. Invece inspiegabilmente alcuni cubi proiettano correttamente la loro ombra, mentre la maggior parte di quelli usati non proietta niente.
+
+### 27 - 03 - 2017 ###
+Integrata la generazione del terreno con heightmap più modifiche ed aggiustamenti per adattare correttamente la scena.
+Spostate le porte tra le due mura per evitare collisioni di poligoni.
+L'idea iniziale era quella di costruire il terreno composto da mattoncini 1x1x1, ma già così le prestazioni crollano a picco, a meno di implementare la rimozione delle faccie e dei quadrati non visibili questa è una soluzione non praticabile per ora.
+La texture applicata si deforma, domani cercarne una adatta o soluzione al problema. Usare semplicemente un colore al posto delle texture rovina tutto l'aspetto grafico.
+
+Correzione della camera.
+
+Inserisco texture diverse a seconda dello scale in altezza del terreno. Mi piacerebbe inserire un pozzo all'interno del castello sfruttando il rilievo presente.
+
+Per limitare la distorsione visiva della texture, rendere la scena meno grossolana e farla sembrare più snella faccio in modo di scalare il terreno di un fattore 1/2, mantenendo comunque le proprietà. Dopo questa modifica il frame rate è migliorato.
+
+Posizionando il castello sulla sabbia l'effetto è decisamente migliore

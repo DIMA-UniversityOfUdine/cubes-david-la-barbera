@@ -30,17 +30,24 @@
 		var scene, camera, renderer, controls, stats;
 
 		var geometry = new THREE.BoxGeometry(1,1,1);
-		var geometry_terreno = new THREE.BoxGeometry(50,1,70);
+		var geometry_2 = new THREE.BoxGeometry(0.5, 1, 1);
 		var geometry_pav_torre = new THREE.BoxGeometry(10, 0.2, 10);
-		var geometry_gate = new THREE.BoxGeometry(1,10,6);
+		var geometry_gate = new THREE.BoxGeometry(0.5,10,7);
 
 		var texture_pietra = THREE.ImageUtils.loadTexture('textures/cobblestone.png');
 		var material_pietra = new THREE.MeshPhongMaterial( { map: texture_pietra } );
 
+		var texture_sand = THREE.ImageUtils.loadTexture('textures/sand.png');
+		var material_sand = new THREE.MeshPhongMaterial( { map: texture_sand } );
+
 		var texture_legno = THREE.ImageUtils.loadTexture('textures/gate_wood.png');
 		var material_legno = new THREE.MeshPhongMaterial( { map: texture_legno } );
-		var texture_terreno = THREE.ImageUtils.loadTexture('textures/grass.jpg');
-		var material_terreno = new THREE.MeshPhongMaterial( { map: texture_terreno } );
+
+		var texture_dirt = THREE.ImageUtils.loadTexture('textures/dirt.png');
+		var material_dirt = new THREE.MeshPhongMaterial( { map: texture_dirt } );
+
+		var texture_water = THREE.ImageUtils.loadTexture('textures/water.png');
+		var material_water = new THREE.MeshPhongMaterial( { map: texture_water } );
 		//Variabili che consentono l'incremento in altezza delle mura
 		var altezza_muro_esterno = 0;
 		var altezza_muro_interno = 0;
@@ -85,8 +92,9 @@
 			renderer.shadowMap.enabled = true;
 			document.body.appendChild( renderer.domElement );
 
-			camera.position.set(40, 50, 40);
-			camera.lookAt( new THREE.Vector3(-25,0,-25));
+			camera.position.set(60, 40, 40);
+			camera.lookAt( new THREE.Vector3(0,0,0));
+
 
 			hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
 			hemiLight.color.setHSL( 0.6, 1, 0.6 );
@@ -104,21 +112,17 @@
 			dirLight.shadow.mapSize.height = 1024;
 
 			//Setto una volta sola la posizione degli oggetti 3D fissi
-			contenitore_castello_globale.position.set(-25, 1, -25);
+			contenitore_castello_globale.position.set(10, 6.8, 3);
 			contenitore_muro_esterno.position.set(-2.5, 0, -2.5);
 			contenitore_muro_interno.position.set(0.5, 0, 0.5);
 			contenitore_torre.position.set(2.5, 0, 2.5);
 			contenitore_ponte1.position.set(-3.5, 0, 24.5);
 			contenitore_ponte2.position.set(36.5, 0, 24.5);
-			contenitore_terreno.position.set(16, -1, 26);
-			contenitore_gate_2.position.set(1.5, 0, 27);
-			contenitore_gate_1.position.set(31.5, 0, 27);
 
-			//Aggiungo il terreno alla scena
-			terreno = new THREE.Mesh(geometry_terreno, material_terreno);
+			contenitore_terreno.position.set(-25, -1, -25);
 
-			terreno.receiveShadow = true;
-			contenitore_terreno.add(terreno);
+			contenitore_gate_2.position.set(-0.5, -0.5, 27);
+			contenitore_gate_1.position.set(33.5, -0.5, 27);
 
 			//Aggiungo i contenitori alla scena
 			contenitore_castello_globale.add(contenitore_muro_esterno);
@@ -128,20 +132,9 @@
 			contenitore_castello_globale.add(contenitore_ponte2);
 			contenitore_castello_globale.add(contenitore_gate_1);
 			contenitore_castello_globale.add(contenitore_gate_2);
-			contenitore_castello_globale.add(contenitore_terreno);
-			scene.add(contenitore_castello_globale);
 
-
-
-			// GROUND
-			var groundGeo = new THREE.PlaneBufferGeometry( 10000, 10000 );
-			var groundMat = new THREE.MeshPhongMaterial( { color: 0x337a36, specular: 0x050505 } );
-			//groundMat.color.setHSL( 1.22, 0.41, 0.34 );
-			var ground = new THREE.Mesh( groundGeo, groundMat );
-			ground.position.y = -0.5;
-			ground.rotation.x = -Math.PI/2;
-			scene.add( ground );
-			ground.receiveShadow = true;
+			contenitore_terreno.add(contenitore_castello_globale);
+			scene.add(contenitore_terreno);
 
 			stats = new Stats();
 			stats.domElement.style.position = 'absolute';
@@ -152,6 +145,39 @@
 			//Coordinates.drawAllAxes();
 			controls = new THREE.OrbitControls( camera );
 			controls.addEventListener( 'change', Render );
+
+						var img = new Image();
+						img.onload = function () {
+
+							//get height data from img
+							var data = getHeightData(img,0.1);
+							//Variabile ausilaria per scandire data
+							var x = 0;
+							var terreno = [img.width];
+
+							for(i = 0; i < img.width; i++){
+
+								terreno[i] = [img.height];
+								for(j = 0; j < img.height; j++){
+									if(data[x] <= 10){
+										terreno[i][j] = new THREE.Mesh( geometry, material_water );
+									}else if(data[x] > 13){
+										terreno[i][j] = new THREE.Mesh( geometry, material_dirt);
+									}else{
+										terreno[i][j] = new THREE.Mesh( geometry, material_sand );
+									}
+
+									//Per avere una posizione in altezza coerente traslo anche su x
+									terreno[i][j].position.set(i, data[x]/4, j);
+									//L'altezza e quindi la scalatura su y viene data dal valore di data[x]
+									terreno[i][j].scale.y = data[x]/2;
+									x++;
+									contenitore_terreno.add(terreno[i][j]);
+								}
+							}
+						}
+						// load img source
+						img.src = "textures/heightmap2.png";
 
 		}
 
@@ -165,27 +191,10 @@
 					for(j = 0; j < dim_j; j++){
 						if(i == 0 || j == 0 || i == dim_i-1 || j == dim_j-1){
 							matrice[i][j] = new THREE.Mesh(geometry, materiale);
-							matrice[i][j].castShadow = true;
-							matrice[i][j].receiveShadow = true;
 							//Posizione del singolo blocco
 							matrice[i][j].position.set(i,h,j);
 							contenitore.add(matrice[i][j]);
 						}
-					}
-				}
-		}
-
-		function creaTerreno(dim_i, dim_j, contenitore){
-			var  matrice = [dim_i];
-				for(i = 0; i < dim_i; i++){
-					matrice[i] = [dim_j];
-					for(j = 0; j < dim_j; j++){
-							matrice[i][j] = new THREE.Mesh(geometry, material_terreno);
-							matrice[i][j].receiveShadow = true;
-							//Posizione del singolo blocco
-							matrice[i][j].position.set(i,0,j);
-							contenitore.add(matrice[i][j]);
-
 					}
 				}
 		}
@@ -199,8 +208,6 @@
 						if((j <= (dim_j/2)-3 ||  j >= (dim_j/2)+3) ){
 							if(i == 0 || j == 0 || i == dim_i-1 || j == dim_j-1){
 								matrice[i][j] = new THREE.Mesh(geometry, materiale);
-								matrice[i][j].castShadow = true;
-								matrice[i][j].receiveShadow = true;
 								//Posizione del singolo blocco
 								matrice[i][j].position.set(i,h,j);
 								contenitore.add(matrice[i][j]);
@@ -219,8 +226,6 @@
 						if(((i%2) == 0) && ((j%2) == 0)){
 							if(i == 0 || j == 0 || i == dim_i-1 || j == dim_j-1){
 								matrice[i][j] = new THREE.Mesh(geometry, materiale);
-								matrice[i][j].castShadow = true;
-								matrice[i][j].receiveShadow = true;
 								//Posizione del singolo blocco
 								matrice[i][j].position.set(i,h,j);
 								contenitore.add(matrice[i][j]);
@@ -233,9 +238,7 @@
 		function creaPonte(h, contenitore){
 			var matrice = [6];
 				for(i = 0; i < 6; i++){
-								matrice[i] = new THREE.Mesh(geometry, material_legno);
-								matrice[i].castShadow = true;
-								matrice[i].receiveShadow = true;
+								matrice[i] = new THREE.Mesh(geometry_2, material_legno);
 								//Posizione del singolo blocco
 								matrice[i].position.set(0,h,i);
 								contenitore.add(matrice[i]);
@@ -295,15 +298,11 @@
 
 						//Creo i cancelli
 						var gate_1 = new THREE.Mesh(geometry_gate, material_legno);
-						gate_1.position.set(0, 4.5, 0);
-						gate_1.castShadow = true;
-						gate_1.receiveShadow = true;
+						gate_1.position.set(0, 5, 0);
 						contenitore_gate_1.add(gate_1);
 
 						var gate_2 = new THREE.Mesh(geometry_gate, material_legno);
-						gate_2.castShadow = true;
-						gate_2.receiveShadow = true;
-						gate_2.position.set(0, 4.5, 0);
+						gate_2.position.set(0, 5, 0);
 						contenitore_gate_2.add(gate_2);
 					}
 
@@ -322,6 +321,37 @@
 					intervallo_tempo = intervallo_tempo + 200;
 				}
 			renderer.render(scene, camera);
+		}
+
+		function getHeightData(img, scale) {
+
+		 if (scale == undefined) scale=1;
+
+		    var canvas = document.createElement( 'canvas' );
+		    canvas.width = img.width;
+		    canvas.height = img.height;
+		    var context = canvas.getContext( '2d' );
+
+		    var size = img.width * img.height;
+				console.log(size);
+		    var data = new Float32Array( size );
+
+		    context.drawImage(img,0,0);
+
+		    for ( var i = 0; i < size; i ++ ) {
+		        data[i] = 0;
+		    }
+
+		    var imgd = context.getImageData(0, 0, img.width, img.height);
+		    var pix = imgd.data;
+
+		    var j=0;
+		    for (var i = 0; i<pix.length; i +=4) {
+		        var all = pix[i]+pix[i+1]+pix[i+2];  // all is in range 0 - 255*3
+		        data[j++] = scale*all/3;
+		    }
+
+		    return data;
 		}
 
 		Start();
