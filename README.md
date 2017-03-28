@@ -44,5 +44,6 @@ Ho preferito implementare delle animazioni sensate nel contesto che ho voluto id
 - Il castello è composto prevalentemente da cubi di dimensioni 1x1x1 e questa è una scelta fortemente voluta poichè mi piacerebbe implementare in un secondo momento delle funzionalità che consentono la sua distruzione, con ciascun mattoncino che subisce l'applicazione di forze fisiche o impatti. Pertanto ho scelto di realizzare la struttura composta da mattoncini singoli di dimensioni regolari ottenendo tra l'altro un effetto grafico più appagante.
 - Ciascuna animazione potrebbe venir istanziata separatamente.
 - Potrebbe essere interessante prevedere una modalità di navigazione della scena più immersiva.
+- Consentire la generazione di una heightmap passando in input una immagine appropriata e posizionare il castello in uno spazio sufficientemente grande da contenerlo.
 
 David La Barbera
