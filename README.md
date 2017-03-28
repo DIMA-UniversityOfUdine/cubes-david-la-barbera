@@ -1,10 +1,14 @@
 # Descrizione Introduttiva
 
 Per questo progetto ho deciso di creare una scena seguendo delle idee ben precise. Ho pensato di creare una applicazione che, nell'arco di una ventina di secondi costruisca un pezzo alla volta un castello composto da mattoncini. L'idea è quella di emulare la costruzione di un edificio con il lego in maniera progressiva con la scena che acquisisce senso ed elementi con il passare del tempo sotto agli occhi dell'utente. La scena come già detto viene costruita per livelli, questo perchè ho utlizzato per la struttura globale del castello solamente box di dimensioni 1x1x1, così da rendere la crescita omogenea in termini di tempo e di altezza.
-Per la realizzazione del progetto ho usato pochi file esterni, solamente tre texture per la pietra, il legno e la base d'erba.
- - La texture per la pietra è stata ottenuta da [Minecraft Texture Pack](http://www.minecrafttexturepacks.com/), un sito web che fornisce texture gratuite da utilizzare come mod sostitutive per quelle originariamente presenti nel gioco, fornendo texture in HD e generalmente diverse da quelle standard. Tale texture è stata applicata ad ogni cubo che fa parte del castello.
+Per la realizzazione del progetto ho usato pochi file esterni, solamente le texture per la pietra, il legno e la base nella quale le varie texture rappresentano l'acqua, la sabbia ed il terriccio a seconda dell'altezza del terreno.
+ - Le texture per la pietra, la sabbia, l'acqua ed il terriccio sono state ottenute da [Minecraft Texture Pack](http://www.minecrafttexturepacks.com/), un sito web che fornisce texture gratuite da utilizzare come mod sostitutive per quelle originariamente presenti nel gioco, fornendo texture in HD e generalmente diverse da quelle standard.
  - La texture per il legno a sua volta fa parte dello stesso pack della precedente. Questa texture è stata applicata ai cubetti che compongono i ponti levatoi e ai parallelepipedi che invece sono stati istanziati per le porte ed il pavimento della sommità della torra.
- - Essendo il cubo usato come base molto più largo rispetto agli altri, ho optato per una texture con risoluzione maggiore rispetto a quelle presenti nel pack precendente. Tale texture è stata ottenuta dal sito web [goodtextures](http://goodtextures.deviantart.com/art/Seamless-Green-Grass-Texture-01-271356478) , ed è senza licenza e quindi gratuitamente utilizzabile.
+
+ Ho integrato inoltre la generazione di una heightmap secondo le specifiche, assegnando diverse texture a seconda dell'altezza del terreno:
+ -  Al livello più basso ho assegnato la texture per l'acqua;
+ - Al livello intermedio e che occupa gran parte del terreno ho assegnato la texture per la sabbia;
+ - Ai livelli più alti ho assegnato una texture più scura per farli risaltare.
 
 # Risultati
 

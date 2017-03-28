@@ -42,4 +42,8 @@ Inserisco texture diverse a seconda dello scale in altezza del terreno. Mi piace
 
 Per limitare la distorsione visiva della texture, rendere la scena meno grossolana e farla sembrare più snella faccio in modo di scalare il terreno di un fattore 1/2, mantenendo comunque le proprietà. Dopo questa modifica il frame rate è migliorato.
 
-Posizionando il castello sulla sabbia l'effetto è decisamente migliore
+Posizionando il castello sulla sabbia l'effetto è decisamente migliore.
+
+### 28 - 03 - 2017 ###
+
+Ho rimosso le ombre in quanto non necessarie.
