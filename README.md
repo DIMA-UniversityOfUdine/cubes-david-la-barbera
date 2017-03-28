@@ -14,18 +14,18 @@ Per la realizzazione del progetto ho usato pochi file esterni, solamente le text
 
 Al fine di meglio spiegare la struttura e quindi la logica dell'applicazione sviluppata, ho creato una sintesi globale dello scenegraph costruito.
 
-![Scenegraph Prodotto](https://github.com/DIMA-UniversityOfUdine/cubes-david-la-barbera/blob/master/images/scenegraph.jpg?raw=true)
+![Scenegraph Prodotto](https://github.com/DIMA-UniversityOfUdine/cubes-david-la-barbera/blob/master/images/scenegraph_definitivo.png)
 
-Come si può vedere ho usato una semplice struttura definendo un pivot globale (**contenitore_castello_globale**) che mi consente in caso di aggiunte future di agire sulla struttura nella sua interezza. In sintesi ciascun pivot contiene:
+Come si può vedere ho usato una semplice struttura definendo un pivot **contenitore_castello_globale** che mi consente in caso di aggiunte future di agire sulla struttura nella sua interezza. In sintesi ciascun pivot contiene:
 - **contenitore_ponte1** e **contenitore_ponte2** contengono le matrici di cubi 1x1x1 che compongono i ponti di accesso alla struttura. Tali cubi si sviluppano in altezza per formare un ponte levatoio alzato ma, durante la costruzione del castello i due contenitori subiscono una rotazione attorno al proprio asse z globalmente di 90 gradi, per aprire il ponte levatoio. Ho implementato volutamente due container distinti tenendo sempre a mente l'eventualità di modifiche successive.
 -  **contenitore_gate_1** e **contenitore_gate_2** contengono ciascuno un parallelepipedo che costituisce la porta di accesso ad un lato del castello. Tale porta viene visualizzata solo quando le mura sono state costruite nella loro interezza e, una volta costruito completamente il castello, traslano rispettivamente lungo -z e +z per aprirsi e consentire l'accesso. Per ragioni estetiche e per rompere un poco la monotonia creata dalla presenza di sole matrici di cubi della stessa dimensione ho creato una geometria unica per questi due elementi.
 - **contenitore_muro_esterno** e **contenitore_muro_interno** sono composti entrambi da una matrice i cui bordi contengono cubi 1x1x1. Sfruttando il metodo Render tali matrici vengono posizionate una sopra l'altra fino ad altezze predefinite andando a costruire le due cinti murarie. Nell'ultimo livello ho istanziato una matrice di cubi posizionati nei bordi in posizioni pari, così da avere una merlatura e rendere il tutto esteticamente più attraente.
 - **contenitore_torre** contiene matrici di cubi come al punto precedente infine contiene un parallelepipedo che crea un pavimento nella sua sommità.
-- **contenitore_terreno** contiene un parallelepipedo usato per posizionare la struttura creata su qualcosa di più solido rispetto al ground già presente.
+**contenitore_terreno** contiene infine la struttura del castello nella sua interezza, consentendomi di riposizionarlo in modo diverso a seconda delle necessità in relazione al terreno.
 
 ![Risultato in Costruzione](https://github.com/DIMA-UniversityOfUdine/cubes-david-la-barbera/blob/master/images/risultato_in_costruzione.png?raw=true)
 
-Come si può vedere nella figura sopra, pochi secondi dopo aver inizializzato l'applicazione i livelli di matrici hanno iniziato a posarsi ad altezza crescente uno sopra l'altro. Si distinguono chiaramente le due cinte murarie, la torre e si può vedere come l'animazione che apre i cancelli sia già stata avviata.
+Come si può vedere nella figura sopra, pochi secondi dopo aver inizializzato l'applicazione i livelli di matrici hanno iniziato a posarsi ad altezza crescente uno sopra l'altro. Si distinguono chiaramente le due cinte murarie, la torre e si può vedere come l'animazione che apre i cancelli sia già stata avviata. Il terreno viene generato nella sua interezza all'avvio dell'applicazione ed il castello si posa senza collisioni sopra di esso.
 
 ![Risultato con Porte Chiuse](https://github.com/DIMA-UniversityOfUdine/cubes-david-la-barbera/blob/master/images/risultato_porte_chiuse.png?raw=true)
 
