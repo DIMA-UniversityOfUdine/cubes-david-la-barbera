@@ -31,7 +31,7 @@ Come si può vedere nella figura sopra, pochi secondi dopo aver inizializzato l'
 
 A questo punto le mura e la torre sono state costruite e si vede le due porte bloccare l'accesso al castello, posizionate nella loro configurazione iniziale.
 
-![Risultato Finale](https://github.com/DIMA-UniversityOfUdine/cubes-david-la-barbera/blob/master/images/risultato_finale.png?raw=true)
+![Risultato Finale](https://github.com/DIMA-UniversityOfUdine/cubes-david-la-barbera/blob/master/images/risultato.png?raw=true)
 
 Come si può vedere in figura infine, la struttura finale del castello prevede che le porte si aprano traslando, restituendo il castello nella sua configurazione finale.
 
